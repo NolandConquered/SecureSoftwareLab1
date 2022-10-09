@@ -41,12 +41,12 @@ namespace lab1.Data
         private static async Task<int> SeedRoles(RoleManager<IdentityRole> roleManager)
         {
             // Create Admin Role
-            var result = await roleManager.CreateAsync(new IdentityRole("Manager"));
+            var result = await roleManager.CreateAsync(new IdentityRole(appSecrets.AdminRole));
             if (!result.Succeeded)
                 return 1;  // should log an error message here
 
             // Create Member Role
-            result = await roleManager.CreateAsync(new IdentityRole("Player"));
+            result = await roleManager.CreateAsync(new IdentityRole(appSecrets.MemberRole));
             if (!result.Succeeded)
                 return 2;  // should log an error message here
 
@@ -58,36 +58,36 @@ namespace lab1.Data
             // Create Admin User
             var adminUser = new ApplicationUser
             {
-                UserName = "the.manager@mohawkcollege.ca",
-                Email = "the.manager@mohawkcollege.ca",
-                FirstName = "The",
-                LastName = "Manager",
+                UserName = appSecrets.AdminUsername,
+                Email = appSecrets.AdminEmail,
+                FirstName = appSecrets.AdminFirstName,
+                LastName = appSecrets.AdminLastName,
                 EmailConfirmed = true
             };
-            var result = await userManager.CreateAsync(adminUser, "Password!1");
+            var result = await userManager.CreateAsync(adminUser, appSecrets.AdminPassword);
             if (!result.Succeeded)
                 return 1;  // should log an error message here
 
             // Assign user to Admin role
-            result = await userManager.AddToRoleAsync(adminUser, "Manager");
+            result = await userManager.AddToRoleAsync(adminUser, appSecrets.AdminRole);
             if (!result.Succeeded)
                 return 2;  // should log an error message here
 
             // Create Member User
             var memberUser = new ApplicationUser
             {
-                UserName = "the.player@mohawkcollege.ca",
-                Email = "the.player@mohawkcollege.ca",
-                FirstName = "The",
-                LastName = "Player",
+                UserName = appSecrets.MemberUsername,
+                Email = appSecrets.MemberEmail,
+                FirstName = appSecrets.MemberFirstName,
+                LastName = appSecrets.MemberLastName,
                 EmailConfirmed = true
             };
-            result = await userManager.CreateAsync(memberUser, "Password!1");
+            result = await userManager.CreateAsync(memberUser, appSecrets.MemberPassword);
             if (!result.Succeeded)
                 return 3;  // should log an error message here
 
             // Assign user to Member role
-            result = await userManager.AddToRoleAsync(memberUser, "Player");
+            result = await userManager.AddToRoleAsync(memberUser, appSecrets.MemberRole);
             if (!result.Succeeded)
                 return 4;  // should log an error message here
 
