@@ -26,7 +26,7 @@ var hosting = app.Services.GetService<IWebHostEnvironment>();
 
 if (hosting.IsDevelopment())
 {
-    var secrets = configuration.GetSection("Secrets").Get<AppSecrets>();
+    var secrets = configuration.GetSection("AppSettings").Get<AppSecrets>();
     DbInitializer.appSecrets = secrets;
 }
 

@@ -41,7 +41,7 @@ namespace lab1.Data
         private static async Task<int> SeedRoles(RoleManager<IdentityRole> roleManager)
         {
             // Create Admin Role
-            var result = await roleManager.CreateAsync(new IdentityRole(appSecrets.AdminRole));
+            var result = await roleManager.CreateAsync(new IdentityRole(System.Configuration.ConfigurationManager.AppSettings["APPSETTING_AdminRole"]));
             if (!result.Succeeded)
                 return 1;  // should log an error message here
 
